@@ -22,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  test_and_deploy:
+  test_and_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,10 +36,8 @@ jobs:
       # インストール
       - run: npm install
       # テスト
-      - name: Test
       - run: npm test
       # ビルド
-      - name: Build
       - run: npm run build --if-present
 
   # GitHub Pagesへデプロイ
