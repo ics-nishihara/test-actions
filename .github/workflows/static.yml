@@ -23,22 +23,37 @@ concurrency:
   
 
 jobs:
+  # インストール
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js v18
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: npm
+        cache-dependency-path: package-lock.json
+    - run: npm install
+    
+  # テスト
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm test
+      
   # ビルド
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js v18
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - run: npm test
       - run: npm run build --if-present
 
-  # Single deploy job since we're just deploying
+  # GitHub Pagesへデプロイ
   deploy:
     environment:
       name: github-pages
