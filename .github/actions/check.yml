@@ -1,0 +1,10 @@
+name: "Code Check"
+runs:
+  using: 'node18'
+  steps:
+    # テスト、リント、フォーマットチェック
+    - run: npm run eslint-check
+    - run: npm run type-check
+    - run: npm run prettier-check
+    # ビルド
+    - run: npm run build --if-present

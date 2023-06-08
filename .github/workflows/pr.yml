@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  chcek:
 
     runs-on: ubuntu-latest
     steps:
@@ -18,5 +18,11 @@ jobs:
       with:
         node-version: 18
         cache: 'npm'
+    # インストール
     - run: npm ci
-    - run: npm test
+    # テスト、リント、フォーマットチェック
+    - run: npm run eslint-check
+    - run: npm run type-check
+    - run: npm run prettier-check
+    # ビルド
+    - run: npm run build --if-present

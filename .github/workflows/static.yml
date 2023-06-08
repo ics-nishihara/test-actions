@@ -22,6 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # テストの実施と静的ファイル生成
   test_and_build:
     runs-on: ubuntu-latest
 
@@ -31,12 +32,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: npm
-          cache-dependency-path: package-lock.json
+          cache: "npm"
       # インストール
-      - run: npm install
-      # テスト
-      - run: npm test
+      - run: npm ci
+      # テスト、リント、フォーマットチェック
+      - uses: ./.github/actions/check
       # ビルド
       - run: npm run build --if-present
 
