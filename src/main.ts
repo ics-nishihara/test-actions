@@ -1,5 +1,5 @@
-import './style.css'
-import  {sum} from "./sum.js"
+import "./style.css";
+import { sum } from "./sum";
 
-document.querySelector(".sumResult").textContent = sum(1,2);
-
+const result = document.querySelector<HTMLElement>(".sumResult");
+result.textContent = sum(1, 2);
