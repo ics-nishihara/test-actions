@@ -22,10 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  test_and_build:
     runs-on: ubuntu-latest
     steps:
       # Node.jsの準備
@@ -43,10 +40,14 @@ jobs:
       - run: npm run prettier-check
       # ビルド
       - run: npm run build --if-present
-      
-      # デプロイ
-      - name: Checkout
-        uses: actions/checkout@v3
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test_and_build
+    steps:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
