@@ -22,13 +22,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # テストの実施と静的ファイル生成、GitHub Pagesへのデプロイ
-  test_build_deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  test_and_build:
     runs-on: ubuntu-latest
-
     steps:
       # Node.jsの準備
       - uses: actions/checkout@v3
@@ -45,7 +40,13 @@ jobs:
       - run: npm run prettier-check
       # ビルド
       - run: npm run build --if-present
-      # GitHub Pagesへデプロイ
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
@@ -53,7 +54,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: "./dist/"
+          # Upload entire repository
+          path: './dist/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
