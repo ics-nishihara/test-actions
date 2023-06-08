@@ -36,6 +36,7 @@ jobs:
       # インストール
       - run: npm ci
       # テスト、リント、フォーマットチェック
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/code-check
       # ビルド
       - run: npm run build --if-present
