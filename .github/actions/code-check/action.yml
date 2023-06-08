@@ -2,6 +2,7 @@ name: "Code Check"
 runs:
   using: 'node18'
   steps:
+    - name: Check
     # テスト、リント、フォーマットチェック
     - run: npm run eslint-check
     - run: npm run type-check
