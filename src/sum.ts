@@ -1,3 +1,3 @@
-export const sum = (a, b):number => {
+export const sum = (a, b:string):number => {
   return a + b;
 };
