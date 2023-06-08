@@ -10,6 +10,7 @@
     "eslint-check": "eslint --ext .ts .",
     "type-check": "tsc --noEmit",
     "prettier-check": "prettier --check src/**/*.{ts,css,html}",
+    "format": "eslint --ext .ts . --fix && prettier --write src/**/*.{ts,css,html}",
     "test": "jest"
   },
   "devDependencies": {
