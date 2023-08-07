@@ -21,6 +21,10 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  # Setting an environment variable with the value of a configuration variable
+  BASE_PATH: ${{ vars.BASE_PATH }}
+
 jobs:
   deploy:
     environment:
@@ -30,6 +34,7 @@ jobs:
     steps:
       # Node.jsの準備
       - uses: actions/checkout@v3
+      - run: echo "env=${{ env.BASE_PATH }}"
       - name: Use Node.js v20
         uses: actions/setup-node@v3
         with:
